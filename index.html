@@ -84,6 +84,29 @@
             font-weight: 400;
         }
 
+        .clear-btn {
+            background-color: var(--fb-hover);
+            color: var(--fb-black-text);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .clear-btn:hover {
+            background-color: #D8DADF;
+        }
+
+        .clear-btn i {
+            font-size: 1rem;
+        }
+
         .container {
             max-width: 1400px;
             width: 95%;
@@ -271,6 +294,9 @@
                     <div class="subtitle">粉絲專頁官方入口</div>
                 </div>
             </div>
+            <button class="clear-btn" id="clearHistoryBtn">
+                <span>🗑️</span> 清除瀏覽紀錄
+            </button>
         </div>
     </header>
 
@@ -385,6 +411,16 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        clearHistoryBtn.addEventListener('click', () => {
+            if (confirm('確定要清除今天的瀏覽紀錄嗎？')) {
+                setCookie(COOKIE_NAME, "", false); // Set expired cookie
+                // Force expire by setting past date
+                document.cookie = COOKIE_NAME + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                location.reload();
+            }
         });
 
         nextUnvisitedBtn.addEventListener('click', () => {
