@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>巴巴事業 - 粉絲專頁入口</title>
+    <style>
+        :root {
+            --fb-blue: #1877F2;
+            --fb-bg: #F0F2F5;
+            --fb-white: #FFFFFF;
+            --fb-gray-text: #65676B;
+            --fb-black-text: #050505;
+            --fb-border: #CED0D4;
+            --fb-hover: #E4E6EB;
+            --fb-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Microsoft JhengHei', 'Noto Sans TC';
+            background-color: var(--fb-bg);
+            color: var(--fb-black-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 12px 0;
+            background-color: var(--fb-white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            width: 95%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fb-logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--fb-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--fb-black-text);
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--fb-gray-text);
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 95%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .fb-card {
+            background: var(--fb-white);
+            border-radius: 8px;
+            padding: 16px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.2s cubic-bezier(0.175, 0.885, 0.32, 1);
+            box-shadow: var(--fb-card-shadow);
+            position: relative;
+            border: 1px solid var(--fb-border);
+        }
+
+        .fb-card:hover {
+            background-color: var(--fb-hover);
+        }
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            background: #e4e6eb;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            border: 1px solid var(--fb-border);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .logo-placeholder {
+            font-size: 2rem;
+            color: var(--fb-gray-text);
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--fb-black-text);
+            text-align: center;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            height: 2.4em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-action {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #E7F3FF;
+            color: var(--fb-blue);
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .fb-card:hover .card-action {
+            background-color: #DBEDFF;
+        }
+
+        /* Clicked state - High Contrast */
+        .fb-card.is-clicked {
+            background-color: #E7F3FF;
+            /* Light FB Blue background */
+            border-color: var(--fb-blue);
+            box-shadow: 0 0 0 2px var(--fb-blue);
+            /* Double border effect */
+        }
+
+        .fb-card.is-clicked .card-action {
+            background-color: var(--fb-blue);
+            color: white;
+        }
+
+        .fb-card.is-clicked .card-action::before {
+            content: '✓ ';
+            font-weight: bold;
+        }
+
+        .fb-card.is-clicked .card-action::after {
+            content: ' (已瀏覽)';
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                padding: 20px 10px;
+            }
+        }
+
+        /* Floating Control Buttons */
+        .floating-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .float-btn {
+            width: 50px;
+            height: 50px;
+            background-color: var(--fb-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .float-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .float-btn:hover {
+            background-color: #166fe5;
+            transform: scale(1.1);
+        }
+
+        #nextUnvisited {
+            background-color: #34A853;
+            /* Use a distinct green for discovery */
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #nextUnvisited:hover {
+            background-color: #2d9249;
+        }
+
+        @media (min-width: 769px) {
+            .floating-controls {
+                display: none;
+                /* Mobile only controls */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="#" class="fb-logo-icon">f</a>
+                <div>
+                    <h1>巴巴事業</h1>
+                    <div class="subtitle">粉絲專頁官方入口</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="cards-container">
+        <!-- Cards will be generated here -->
+    </div>
+
+    <div class="floating-controls">
+        <button id="backToTop" class="float-btn" title="回到頂部">↑</button>
+        <button id="nextUnvisited" class="float-btn" title="跳至下一個未瀏覽">🔍</button>
+    </div>
+
+    <script>
+        const fbLinks = [
+            { name: "巴巴事業-欣巴巴", url: "https://www.facebook.com/baba6688", logo: "https://scontent.fkhh1-1.fna.fbcdn.net/v/t39.30808-1/275261058_1741426422699166_4578288983941503792_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=feFCZdj401EQ7kNvwEMReJ7&_nc_oc=Adm73Mqb7gGevpGllBwUpY3RmfH96hsP7769B5OE9JZ_eV-2BCuf8kuQlLtiVqmGczE&_nc_zt=24&_nc_ht=scontent.fkhh1-1.fna&_nc_gid=UFcXN5vqBrOUy7ZgDgMjag&oh=00_AfthtV8FYSf2KzLqUb8LQQk-gK8m5SFNEIQe100I6D88ig&oe=69861804" },
+            { name: "欣巴巴-欣世代", url: "https://www.facebook.com/88NEWSTAR", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/487173957_1202602628536827_5883680511950144047_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=dVaxiqUKWpQQ7kNvwEKmYTp&_nc_oc=Adngtxbr3oYA3GTgeDds4_W6rXLsjW-9MbZ1P4PZOBPAlYhLEf0EKHcWMwYofHdZHOA&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=z7MrpLM-ar55BckBknA-dg&oh=00_Afv5Zi5r-XhoE8uoJ3sGKifNkD-o7srfvhB4sfAJGyOzVA&oe=698617E4" },
+            { name: "欣巴巴-文元及第", url: "https://www.facebook.com/babawenyuan", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/298976755_1132760874340715_8807117567564329976_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=5RsLikkbExEQ7kNvwFAOYBT&_nc_oc=AdkHAVLxF4FtKAJ0MC78a98lwc9ZYst8--zuOHM7L8meCJKXO_UQ3qN_ez-QtJw0X70&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=geoxJ-gJXeJQIflrz3f2AQ&oh=00_Afv29ZX0x4ceKYyrUAqh3dN9dOC4cYWcdvEalrw0YN20Eg&oe=698613D7" },
+            { name: "欣巴巴 戀戀風格", url: "https://www.facebook.com/profile.php?id=100063900671977#", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/298989372_1324455341296011_4218978947645946757_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=b5gs3JFX_IQQ7kNvwEaYHEH&_nc_oc=AdmKn4JwVuydriPV384cCjY0flzpr4PFn04B06MiLXB4r1V_WsOYm9wkei6DIvxuaKU&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=HhCuQytiQ6qupJMcAV6ixg&oh=00_AfuBjbH4T9hjBw8WEbbXFJ-WyhAQueWpBiU8nlkG2eNFEA&oe=69860696" },
+            { name: "欣巴巴-戀戀風尚", url: "https://www.facebook.com/profile.php?id=100064070198061#", logo: "https://scontent.fkhh1-1.fna.fbcdn.net/v/t39.30808-6/298267353_440738158071854_2658947520666206635_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=9R0Tqa_jJ1YQ7kNvwEf7Zxa&_nc_oc=Adm9bhXPwQCEG977AzJkasRQtSunh9r-7EZCY2l4Gbww0DOC043fgW24F1WHSsjOVyY&_nc_zt=23&_nc_ht=scontent.fkhh1-1.fna&_nc_gid=iV3mtrdt0GzNJ_1m9tcZQw&oh=00_Aftb5kVGmgl6Y5oUzhbJvqZXae3_xg3DgXbMRNcA2XOe5g&oe=69861FCA" },
+            { name: "欣巴巴-欣時代-臨時推廣中心", url: "https://www.facebook.com/hsin9906", logo: "https://scontent.fkhh1-1.fna.fbcdn.net/v/t39.30808-6/428609653_907217138082864_7029482887533936322_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=F-Ax9QaHdpQQ7kNvwGBkh0r&_nc_oc=AdmWzMLaxdG-nTBR2Y1BrOIBW4WiG5XjASfit_-K5biRv9Z4qaU-NRwTN4StFBTVnrs&_nc_zt=23&_nc_ht=scontent.fkhh1-1.fna&_nc_gid=nEzl6Rx4RXz9ek7UoN02mw&oh=00_AfvqlIw5CfRHN3CDabQgR35XBSt7kbVl3F_8uACn6qL24w&oe=6985F38C" },
+            { name: "巴巴事業 中央花園", url: "https://www.facebook.com/profile.php?id=100063740365281#", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/278162278_379995840801758_79517385024623801_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=TjJl8Ieyz5UQ7kNvwF5pAK6&_nc_oc=Adlix6PTRBdS_SH5Oh_VdeuPDq6E_c7aq1KJhKus45HrCcCxNapCuSBUqkKSBFg5q9w&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=DeBltHTKl02zds4pGpG_JQ&oh=00_AfuMz9zwPBZyMChunHHIXVZDYB7IklxBHrvisBO9nWBJLA&oe=69861DB9" },
+            { name: "欣巴巴-曉陽明2·奇岩欣境", url: "https://www.facebook.com/profile.php?id=100064045773030#", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/461683735_956212563190261_2509933701712774763_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=rteOo_OaKwsQ7kNvwHKfBfQ&_nc_oc=AdmoeEwO1rfdjqaX27duqYnhBHokUp2n6XBcmYoUhnQbUNHyMjWxIomEc3n-5Z72MwM&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=IES00id1cSZwwL_q0SKcUw&oh=00_AftiAGWEY9eB7elifq3uiD6DxrhrAZc3zyJRq0NqEC7_xA&oe=6985F526" },
+            { name: "巴巴事業-一品花園", url: "https://www.facebook.com/profile.php?id=100057105863399#", logo: "https://scontent.fkhh1-1.fna.fbcdn.net/v/t39.30808-6/292118264_539351361311721_5424003891054556048_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=eGvv-lhSqPgQ7kNvwGiSkXr&_nc_oc=AdkuA-FcsdHFFVFVh-bZtXwVQI6eEG-bwWhZQmhXX_82fV8hqAYcyOvHNstQhPVoe-0&_nc_zt=23&_nc_ht=scontent.fkhh1-1.fna&_nc_gid=y5_SGlsOGNs68PEHetn9Rg&oh=00_Aft4Y4md1PIw9GfskChjde_l-M86bEdohd1rJOfdXrAxyQ&oe=6985F955" },
+            { name: "欣巴巴 戀戀APP", url: "https://www.facebook.com/profile.php?id=100064750957035#", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/299148152_3468488083378354_3912632354063273745_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=RVGfH9JwxK8Q7kNvwGVj2bW&_nc_oc=AdkLQfLM3fvhQe8nz0OUvhd_8YhPPUpGGspQH_6-cIgkqCf-swCZUntRG6R8iQK2TNI&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=8rZuoQlfgPZwDPv6cd2iLg&oh=00_AfuFehck_yKoaDuxxeuy0iXpo1RdsUf1Nd3qro4vWvMN1g&oe=698623CA" },
+            { name: "公益信託巴巴慈善基金", url: "https://www.facebook.com/baba6688charity", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/326084942_732666485052926_6443674890024589994_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=BCp9wjW3WB8Q7kNvwFxFwbt&_nc_oc=AdkAz_czOh2MUCCbtOOeIhB30LlOSiIzT0jV_J_g7oMYlEMgglRIKNB5JYwtqLuShvY&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=cojTUY-0NUT1ua1zxR8tTg&oh=00_AftGOCz7cghjcVIPot_7_qKyd49uz7kcGW61cVa-GLJ5YQ&oe=69862A11" },
+            { name: "欣巴巴-戀戀Life", url: "https://www.facebook.com/profile.php?id=100064003239216#", logo: "https://scontent.fkhh1-1.fna.fbcdn.net/v/t39.30808-6/299924982_5540142826008848_1270268173525166816_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=4xNVuC34jHcQ7kNvwGWt8os&_nc_oc=AdnqQNU0CvtxKf4qYowTF7jLnEAq6xrf_F2rnQj8HTcKAFbG7DoWKpPc2BC_RLvrhus&_nc_zt=23&_nc_ht=scontent.fkhh1-1.fna&_nc_gid=DM5iGdhBvivr5w7mzSMUig&oh=00_AfvrkszCHhF7wnd_l1As8ExcW8qHsjNcxauWCj7awq1nyw&oe=698609BF" },
+            { name: "欣巴巴-幸福欣印象", url: "https://www.facebook.com/profile.php?id=100083392596284#", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/447867120_437645919025158_9148669171335809376_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=64DX-JcFu0gQ7kNvwFD8U5I&_nc_oc=Adm2CqmXlvsrDEVW8EjmaL0yiDVdJlGFzfwqj4BxhzgtKMma4MBdImN7Pu1vVrZm_48&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=w2skCVIs5uLZjSJncg3pzw&oh=00_Afu2Yr_9ljGFbbKmHafX9dkyDNhZ_rypRPivsphfVIFCQg&oe=69861511" },
+            { name: "巴巴事業-戀戀More", url: "https://www.facebook.com/profile.php?id=100083543523884#", logo: "https://scontent.fkhh1-1.fna.fbcdn.net/v/t39.30808-6/288175007_101730742588962_1914414861615431051_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WnMmtrF5wjwQ7kNvwEHMzEV&_nc_oc=AdmlZq4yGE3m2I3WeCqRTI2LVOxAtg8tLjViHy_PluotR8BIsnmVVs5XxWPwDZLiuB4&_nc_zt=23&_nc_ht=scontent.fkhh1-1.fna&_nc_gid=7I_UxcqP7Cz72J32iyu4hg&oh=00_Afv3RBKRTcrjvmgolpCQHsTNAkXxjbrXUBoJff6mS_qsQw&oe=698624AC" },
+            { name: "巴巴事業 - 欣潮1‧2", url: "https://www.facebook.com/profile.php?id=100086290841224#", logo: "https://scontent.fkhh1-1.fna.fbcdn.net/v/t39.30808-6/602386301_854485030771184_962515628248282526_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ziWJ5ToisT4Q7kNvwFGXHNU&_nc_oc=AdnYHtEOVn6n0iEwEtWqAzr_yeMU3xKYW7mPNkWE_5qCsna0yxEZUcQ1n9woBO18hf4&_nc_zt=23&_nc_ht=scontent.fkhh1-1.fna&_nc_gid=J66kZLPWHEhLSHFQkbHgXQ&oh=00_Afsl4Xity8lFF04HluYZhKn9qpYN07fsHWKNhULbd7S6FQ&oe=698628AD" },
+            { name: "巴巴事業-進士樓", url: "https://www.facebook.com/HeartofTainan", logo: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/617076384_1220532206935787_8990979175936676736_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ceFft7knMgIQ7kNvwGikgso&_nc_oc=AdlmyJR3cEuXTW2Jk08vz7rSE8qzCFsqDl1xQzgM06hy0MrRnCkQtGWP1bL3h7J9jCI&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=V1IpPX93Vz0PoG-2UdYetA&oh=00_AfvPKeEbFTf-2zXsGVuOEvFYt5UHOau7L48ClK74fNXhBw&oe=69860F4D" }
+        ];
+
+        const container = document.getElementById('cards-container');
+
+        // --- Cookie Tracking Logic ---
+        const COOKIE_NAME = 'fb_clicked_links';
+
+        function setCookie(name, value, endOfDay = true) {
+            let expires = "";
+            if (endOfDay) {
+                const now = new Date();
+                const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+                expires = "; expires=" + end.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Get clicked links from cookie
+        let clickedLinks = (getCookie(COOKIE_NAME) || '').split(',').filter(x => x);
+
+        function markAsClicked(name) {
+            if (!clickedLinks.includes(name)) {
+                clickedLinks.push(name);
+                setCookie(COOKIE_NAME, clickedLinks.join(','));
+            }
+        }
+        // ----------------------------
+
+        fbLinks.forEach((link, index) => {
+            const card = document.createElement('a');
+            card.className = 'fb-card';
+            card.href = link.url;
+            card.target = '_blank';
+
+            // Apply clicked state if already in cookie
+            if (clickedLinks.includes(link.name)) {
+                card.classList.add('is-clicked');
+            }
+
+            card.innerHTML = `
+                <div class="logo-container">
+                    <img src="${link.logo}" alt="${link.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="card-title">${link.name}</div>
+                <div class="card-action">前往粉絲專頁</div>
+            `;
+
+            // Handle click event
+            card.addEventListener('click', () => {
+                markAsClicked(link.name);
+                card.classList.add('is-clicked');
+            });
+
+            container.appendChild(card);
+        });
+
+        // --- Floating Buttons Logic ---
+        const backToTopBtn = document.getElementById('backToTop');
+        const nextUnvisitedBtn = document.getElementById('nextUnvisited');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        nextUnvisitedBtn.addEventListener('click', () => {
+            const unvisited = Array.from(document.querySelectorAll('.fb-card')).find(card => !card.classList.contains('is-clicked'));
+            if (unvisited) {
+                const headerHeight = document.querySelector('header').offsetHeight + 20;
+                const elementPosition = unvisited.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            } else {
+                alert('恭喜！今天所有的粉絲專頁都已經瀏覽過了。');
+            }
+        });
+    </script>
+</body>
+
+</html>
