@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>巴巴事業 - 粉絲專頁入口</title>
+    <style>
+        :root {
+            --fb-blue: #1877F2;
+            --fb-bg: #F0F2F5;
+            --fb-white: #FFFFFF;
+            --fb-gray-text: #65676B;
+            --fb-black-text: #050505;
+            --fb-border: #CED0D4;
+            --fb-hover: #E4E6EB;
+            --fb-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Microsoft JhengHei', 'Noto Sans TC';
+            background-color: var(--fb-bg);
+            color: var(--fb-black-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 12px 0;
+            background-color: var(--fb-white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            width: 95%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fb-logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--fb-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--fb-black-text);
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--fb-gray-text);
+            font-weight: 400;
+        }
+
+        .clear-btn {
+            background-color: var(--fb-hover);
+            color: var(--fb-black-text);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .clear-btn:hover {
+            background-color: #D8DADF;
+        }
+
+        .clear-btn i {
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 95%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .fb-card {
+            background: var(--fb-white);
+            border-radius: 8px;
+            padding: 16px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.2s cubic-bezier(0.175, 0.885, 0.32, 1);
+            box-shadow: var(--fb-card-shadow);
+            position: relative;
+            border: 1px solid var(--fb-border);
+        }
+
+        .fb-card:hover {
+            background-color: var(--fb-hover);
+        }
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            background: #e4e6eb;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            border: 1px solid var(--fb-border);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .logo-placeholder {
+            font-size: 2rem;
+            color: var(--fb-gray-text);
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--fb-black-text);
+            text-align: center;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            height: 2.4em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-action {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #E7F3FF;
+            color: var(--fb-blue);
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .fb-card:hover .card-action {
+            background-color: #DBEDFF;
+        }
+
+        /* Clicked state - High Contrast */
+        .fb-card.is-clicked {
+            background-color: #E7F3FF;
+            /* Light FB Blue background */
+            border-color: var(--fb-blue);
+            box-shadow: 0 0 0 2px var(--fb-blue);
+            /* Double border effect */
+        }
+
+        .fb-card.is-clicked .card-action {
+            background-color: var(--fb-blue);
+            color: white;
+        }
+
+        .fb-card.is-clicked .card-action::before {
+            content: '✓ ';
+            font-weight: bold;
+        }
+
+        .fb-card.is-clicked .card-action::after {
+            content: ' (已瀏覽)';
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                padding: 20px 10px;
+            }
+        }
+
+        /* Floating Control Buttons */
+        .floating-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .float-btn {
+            width: 50px;
+            height: 50px;
+            background-color: var(--fb-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .float-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .float-btn:hover {
+            background-color: #166fe5;
+            transform: scale(1.1);
+        }
+
+        #nextUnvisited {
+            background-color: #34A853;
+            /* Use a distinct green for discovery */
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #nextUnvisited:hover {
+            background-color: #2d9249;
+        }
+
+        @media (min-width: 769px) {
+            .floating-controls {
+                display: none;
+                /* Mobile only controls */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <a href="#" class="fb-logo-icon">f</a>
+                <div>
+                    <h1>巴巴事業</h1>
+                    <div class="subtitle">粉絲專頁官方入口</div>
+                </div>
+            </div>
+            <button class="clear-btn" id="clearHistoryBtn">
+                <span>🗑️</span> 清除瀏覽紀錄
+            </button>
+        </div>
+    </header>
+
+    <div class="container" id="cards-container">
+        <!-- Cards will be generated here -->
+    </div>
+
+    <div class="floating-controls">
+        <button id="backToTop" class="float-btn" title="回到頂部">↑</button>
+        <button id="nextUnvisited" class="float-btn" title="跳至下一個未瀏覽">🔍</button>
+    </div>
+
+    <script>
+        const fbLinks = [
+            { name: "巴巴事業-欣巴巴", url: "https://www.facebook.com/baba6688", logo: "img/img1.jpg" },
+            { name: "欣巴巴-欣世代", url: "https://www.facebook.com/88NEWSTAR", logo: "img/img2.jpg" },
+            { name: "欣巴巴-文元及第", url: "https://www.facebook.com/babawenyuan", logo: "img/img3.jpg" },
+            { name: "欣巴巴 戀戀風格", url: "https://www.facebook.com/profile.php?id=100063900671977#", logo: "img/img4.jpg" },
+            { name: "欣巴巴-戀戀風尚", url: "https://www.facebook.com/profile.php?id=100064070198061#", logo: "img/img5.jpg" },
+            { name: "欣巴巴-欣時代-臨時推廣中心", url: "https://www.facebook.com/hsin9906", logo: "img/img6.jpg" },
+            { name: "巴巴事業 中央花園", url: "https://www.facebook.com/profile.php?id=100063740365281#", logo: "img/img7.jpg" },
+            { name: "欣巴巴-曉陽明2·奇岩欣境", url: "https://www.facebook.com/profile.php?id=100064045773030#", logo: "img/img8.jpg" },
+            { name: "巴巴事業-一品花園", url: "https://www.facebook.com/profile.php?id=100057105863399#", logo: "img/img9.jpg" },
+            { name: "欣巴巴 戀戀APP", url: "https://www.facebook.com/profile.php?id=100064750957035#", logo: "img/img10.jpg" },
+            { name: "公益信託巴巴慈善基金", url: "https://www.facebook.com/baba6688charity", logo: "img/img11.jpg" },
+            { name: "欣巴巴-戀戀Life", url: "https://www.facebook.com/profile.php?id=100064003239216#", logo: "img/img12.jpg" },
+            { name: "欣巴巴-幸福欣印象", url: "https://www.facebook.com/profile.php?id=100083392596284#", logo: "img/img13.jpg" },
+            { name: "巴巴事業-戀戀More", url: "https://www.facebook.com/profile.php?id=100083543523884#", logo: "img/img14.jpg" },
+            { name: "巴巴事業 - 欣潮1‧2", url: "https://www.facebook.com/profile.php?id=100086290841224#", logo: "img/img15.jpg" },
+            { name: "巴巴事業-進士樓", url: "https://www.facebook.com/HeartofTainan", logo: "img/img16.jpg" },
+            { name: "欣巴巴-欣都星", url: "https://www.facebook.com/profile.php?id=61568339930377", logo: "img/img17.jpg" },
+            { name: "巴巴事業 北區鄭子寮案", url: "https://www.facebook.com/profile.php?id=61569925710386", logo: "img/img18.jpg" }
+        ];
+
+        const container = document.getElementById('cards-container');
+
+        // --- Cookie Tracking Logic ---
+        const COOKIE_NAME = 'fb_clicked_links';
+
+        function setCookie(name, value, endOfDay = true) {
+            let expires = "";
+            if (endOfDay) {
+                const now = new Date();
+                const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+                expires = "; expires=" + end.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Get clicked links from cookie
+        let clickedLinks = (getCookie(COOKIE_NAME) || '').split(',').filter(x => x);
+
+        function markAsClicked(name) {
+            if (!clickedLinks.includes(name)) {
+                clickedLinks.push(name);
+                setCookie(COOKIE_NAME, clickedLinks.join(','));
+            }
+        }
+        // ----------------------------
+
+        fbLinks.forEach((link, index) => {
+            const card = document.createElement('a');
+            card.className = 'fb-card';
+            card.href = link.url;
+            card.target = '_blank';
+
+            // Apply clicked state if already in cookie
+            if (clickedLinks.includes(link.name)) {
+                card.classList.add('is-clicked');
+            }
+
+            card.innerHTML = `
+                <div class="logo-container">
+                    <img src="${link.logo}" alt="${link.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="card-title">${link.name}</div>
+                <div class="card-action">前往粉絲專頁</div>
+            `;
+
+            // Handle click event
+            card.addEventListener('click', () => {
+                markAsClicked(link.name);
+                card.classList.add('is-clicked');
+            });
+
+            container.appendChild(card);
+        });
+
+        // --- Floating Buttons Logic ---
+        const backToTopBtn = document.getElementById('backToTop');
+        const nextUnvisitedBtn = document.getElementById('nextUnvisited');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        clearHistoryBtn.addEventListener('click', () => {
+            if (confirm('確定要清除今天的瀏覽紀錄嗎？')) {
+                setCookie(COOKIE_NAME, "", false); // Set expired cookie
+                // Force expire by setting past date
+                document.cookie = COOKIE_NAME + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                location.reload();
+            }
+        });
+
+        nextUnvisitedBtn.addEventListener('click', () => {
+            const unvisited = Array.from(document.querySelectorAll('.fb-card')).find(card => !card.classList.contains('is-clicked'));
+            if (unvisited) {
+                const headerHeight = document.querySelector('header').offsetHeight + 20;
+                const elementPosition = unvisited.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            } else {
+                alert('恭喜！今天所有的粉絲專頁都已經瀏覽過了。');
+            }
+        });
+    </script>
+</body>
+
+</html>
